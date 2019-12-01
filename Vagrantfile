@@ -15,7 +15,8 @@ def fs_init(user)
     find /vagrant/ -name '__pycache__' -exec rm -rf {} \\; 2> /dev/null
 
     chown -R #{user} /vagrant/*
-    touch ~#{user}/.bash_profile ; chown #{user} ~#{user}/.bash_profile
+    touch ~#{user}/.bash_profile
+    chown #{user} ~#{user}/.bash_profile
 
     echo 'export LANG=en_US.UTF-8' >> ~#{user}/.bash_profile
     echo 'export LC_CTYPE=en_US.UTF-8' >> ~#{user}/.bash_profile
@@ -49,7 +50,8 @@ def packages_debianoid(user)
       zsh \
       git \
       curl \
-      wget
+      wget \
+      python3-powerline
 
   EOF
 end

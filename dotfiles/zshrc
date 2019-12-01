@@ -12,10 +12,10 @@ plugins=(
 	github
 	zsh-autosuggestions
 #	vi-mode
-	kubectl
+#	kubectl
 	zsh-syntax-highlighting
-	z
 )
+
 # Uncomment the following line to disable bi-weekly auto-update checks.
 DISABLE_AUTO_UPDATE="true"
 

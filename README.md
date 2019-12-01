@@ -25,3 +25,8 @@ Author Information
 ==================
 
 <a href="https://github.com/tehtbl"><img src="https://img.shields.io/badge/GitHub-tehtbl-blue/?style=flat&logo=github" /></a> <a href="https://twitter.com/tehtbl"><img src="https://img.shields.io/badge/Twitter-tehtbl-blue/?style=flat&logo=twitter" /></a>
+
+TODO
+====
+
+* [ ] re-organize bash/zsh RC files, e.g. aliases, functions, ...
