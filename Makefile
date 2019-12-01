@@ -18,7 +18,7 @@ help: ## This help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 # make targets PHONY
-.PHONY: preflightcheck all link postinsttmux
+.PHONY: all link preflightcheck postinsttmux
 all: preflightcheck link postinsttmux ## make all targets
 
 link: | $(DOTFILES) ## interactively add symbolic dotfile links // actually copy not linking
@@ -32,37 +32,29 @@ $(DOTFILES):
 preflightcheck: ## check if all dotfiles can be installed and used as expected
 	@echo "[*] updating ZSH git repos"
 
-	@git -C $(HOME)/.oh-my-zsh pull || \
-		git clone https://github.com/robbyrussell/oh-my-zsh.git $(HOME)/.oh-my-zsh &> /dev/null
-	@git -C $(HOME)/.oh-my-zsh/custom/themes/powerlevel10k pull || \
-		git clone https://github.com/romkatv/powerlevel10k.git $(HOME)/.oh-my-zsh/custom/themes/powerlevel10k
-	@git -C $(HOME)/.oh-my-zsh/custom/themes/spaceship-prompt pull || \
-		git clone https://github.com/denysdovhan/spaceship-prompt.git $(HOME)/.oh-my-zsh/custom/themes/spaceship-prompt
+	@git -C $(HOME)/.oh-my-zsh pull || git clone https://github.com/robbyrussell/oh-my-zsh.git $(HOME)/.oh-my-zsh
+	@git -C $(HOME)/.oh-my-zsh/custom/themes/powerlevel10k pull || git clone https://github.com/romkatv/powerlevel10k.git "$(HOME)/.oh-my-zsh/custom/themes/powerlevel10k"
+	@git -C "$(HOME)/.oh-my-zsh/custom/themes/spaceship-prompt" pull || git clone https://github.com/denysdovhan/spaceship-prompt.git "$(HOME)/.oh-my-zsh/custom/themes/spaceship-prompt"
+	@ln -sf "$(HOME)/.oh-my-zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$(HOME)/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
 
-	@git -C $(HOME)/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting pull || \
-		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $(HOME)/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-	@git -C $(HOME)/.oh-my-zsh/custom/plugins/zsh-autosuggestions pull || \
-		git clone https://github.com/zsh-users/zsh-autosuggestions $(HOME)/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+	@git -C "$(HOME)/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" pull || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$(HOME)/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+	@git -C "$(HOME)/.oh-my-zsh/custom/plugins/zsh-autosuggestions" pull || git clone https://github.com/zsh-users/zsh-autosuggestions "$(HOME)/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 
-	@echo "checking for tmux related requirements"
-
+	@echo "[*] checking for tmux related requirements"
 	@bash -c "which tmux &> /dev/null || (echo 'do: sudo apt install tmux' && exit 1)"
 	@bash -c "which fc-cache &> /dev/null || (echo 'do: sudo apt install fontconfig' && exit 1)"
 
 postinsttmux: ## install tmux tpm etc after config is linked
 	@echo "[*] doing post tmux install"
-	@git -C $(HOME)/.tmux/plugins/tpm pull || \
-		git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm
-	mkdir -p $(HOME)/.fonts $(HOME)/.config/fontconfig/conf.d
-	wget -P $(HOME)/.fonts https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf &> /dev/null
-	wget -P $(HOME)/.config/fontconfig/conf.d/ https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf &> /dev/null
-	fc-cache -vf $(HOME)/.fonts/ &> /dev/null
-	printf "Install TPM plugins\n"
-	tmux new -d -s __noop >/dev/null 2>&1 || true
-	tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$HOME/.tmux/plugins"
-	"$HOME/.tmux/plugins/tpm/bin/install_plugins" || true
-	tmux kill-session -t __noop >/dev/null 2>&1 || true
-
+	@git -C "$(HOME)/.tmux/plugins/tpm" pull || git clone https://github.com/tmux-plugins/tpm "$(HOME)/.tmux/plugins/tpm"
+	$(shell mkdir -p $(HOME)/.fonts $(HOME)/.config/fontconfig/conf.d)
+	$(shell wget -P $(HOME)/.fonts https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf &> /dev/null)
+	$(shell wget -P $(HOME)/.config/fontconfig/conf.d/ https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf &> /dev/null)
+	$(shell fc-cache -vf $(HOME)/.fonts/ &> /dev/null)
+	$(shell tmux new -d -s __noop >/dev/null 2>&1 || true)
+	$(shell tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "$(HOME)/.tmux/plugins")
+	$(shell "$(HOME)/.tmux/plugins/tpm/bin/install_plugins" || true)
+	$(shell tmux kill-session -t __noop >/dev/null 2>&1 || true)
 
 # Testing
 .PHONY: shellcheck

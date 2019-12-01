@@ -30,23 +30,27 @@ end
 #
 def packages_debianoid(user)
   return <<-EOF
+
     apt update
-
-    # install all the (security and other) updates
     apt dist-upgrade -y
-
-    # for building borgbackup and dependencies:
-    apt install -y libssl-dev libacl1-dev liblz4-dev libzstd-dev libfuse-dev fuse pkg-config fontconfig
 
     usermod -a -G fuse #{user}
     chgrp fuse /dev/fuse
     chmod 666 /dev/fuse
 
-    apt install -y fakeroot build-essential git curl
-    apt install -y python3-dev python3-setuptools python-virtualenv python3-virtualenv python3-pip python3-venv
+    apt install -y \
+      python3-dev \
+      python3-setuptools \
+      python-virtualenv \
+      python3-virtualenv \
+      python3-pip \
+      python3-venv \
+      fontconfig \
+      zsh \
+      git \
+      curl \
+      wget
 
-    # for building python:
-    apt install -y zlib1g-dev libbz2-dev libncurses5-dev libreadline-dev liblzma-dev libsqlite3-dev libffi-dev
   EOF
 end
 
@@ -134,7 +138,7 @@ Vagrant.configure(2) do |config|
     b.vm.provision "install pyenv", :run => "once", :type => :shell, :privileged => false, :inline => install_pyenv("bionic64")
     # b.vm.provision "install pythons", :run => "once", :type => :shell, :privileged => false, :inline => install_pythons("bionic64")
     # b.vm.provision :docker, :run => "once"
-    # b.vm.provision :reload, :run => "once"
+    b.vm.provision :reload, :run => "once"
 
     # b.vm.provision "run tests", :run => "always", :type => :shell, :privileged => false, :inline => run_tests("bionic64", "vagrant")
   end

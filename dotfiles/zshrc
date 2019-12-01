@@ -106,12 +106,16 @@ export LANGUAGE="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
 # additional files to source
-for file in ~/.bash_{nvm,pyenv,sw042} ~/tbl_aliases; do
+for file in ~/.bash_{nvm,pyenv,sw042} ~/.tbl_aliases; do
     [ -r "$file" ] && source "$file"
 done
 unset file
 
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
 #TODO: check for: autoload -U +X bashcompinit && bashcompinit
 
 # TODO: check https://github.com/lanej/dotfiles/blob/master/sh/alias
-source "$HOME/tbl_aliases"
+source "$HOME/.tbl_aliases"

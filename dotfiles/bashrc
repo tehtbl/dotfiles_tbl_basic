@@ -52,6 +52,7 @@ export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 # PATH settings
 export PATH="/usr/local/bin:$HOME/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
 
 # https://www.cyberciti.biz/tips/understanding-linux-unix-umask-value-usage.html
 umask 077
@@ -61,7 +62,7 @@ shopt -s checkwinsize
 stty -ixon
 
 # additional files to source
-for file in ~/.bash_{prompt,functions,nvm,pyenv,sw042} ~/tbl_aliases; do
+for file in ~/.bash_{prompt,functions,nvm,pyenv,sw042} ~/.tbl_aliases; do
     [ -r "$file" ] && source "$file"
 done
 unset file
