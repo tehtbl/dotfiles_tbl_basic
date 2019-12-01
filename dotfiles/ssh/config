@@ -1,0 +1,13 @@
+
+Host *
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    Compression yes
+    User tbl
+    IdentityFile ~/.ssh/id_rsa
+    ControlMaster auto
+    ControlPersist 60s
+    ControlPath /tmp/ssh-%h-%p-%r
+    XAuthLocation /usr/X11/bin/xauth
+    ServerAliveInterval 60
+    ForwardX11Timeout 596h

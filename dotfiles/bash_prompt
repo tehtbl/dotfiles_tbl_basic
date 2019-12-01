@@ -1,0 +1,61 @@
+# https://misc.flogisoft.com/bash/tip_colors_and_formatting
+DARK_BLACK="\e[0;49;30m"
+DARK_RED="\e[0;49;31m"
+DARK_GREEN="\e[0;49;32m"
+DARK_YELLOW="\e[0;49;33m"
+DARK_BLUE="\e[0;49;34m"
+DARK_MAGENTA="\e[0;49;35m"
+DARK_TURKEY="\e[0;49;36m"
+DARK_WHITE="\e[0;49;37m"
+DARK_GREY="\e[0;49;90m"
+CLEAR="\e[0;0m"
+
+# My PS1 prompt.
+#    Normally:
+#       [user@host directory]
+#
+#    When logged in via SSH:
+#       [ssh:user@host directory]
+#
+#    When on in a git repo:
+#       [user@host directory branch]
+#
+#    When on a git repo with uncommitted changes:
+#       [user@host directory branch ⚑]
+#
+# Note: it might be worth ripping out more info such as the status.
+#   See https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/git.zsh#L40
+___ssh_flag() {
+    if [ -n "$SSH_TTY" -a -n "$SSH_CONNECTION" ]; then echo -en "${DARK_YELLOW}ssh:${CLEAR}"; fi
+}
+
+___git_branch() {
+  BRANCH=$(git branch --no-color 2> /dev/null)
+
+  [[ $? -eq 0 ]] && echo "${BRANCH}" | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /'
+}
+
+___git_dirty_flag() {
+  if [ x$(git config --get prompt.status) != xfalse ]; then
+    if [[ -n $(git status --porcelain '--ignore-submodules=dirty' 2>/dev/null) ]]; then
+      echo "⚑ "
+    fi
+  else
+    echo "«⋯» "
+  fi
+}
+
+RETVAL="${DARK_WHITE}[\$?]${CLEAR}"
+
+#USER_HOST="\[\033[0;32m\u@( \[\033[0;34m\h \[\033[0;32m)"
+USER_HOST="${DARK_GREEN}\u@( ${DARK_BLUE}\h ${DARK_GREEN})"
+[[ ${UID} -eq 0 ]] && USER_HOST="${DARK_RED}\u@( ${DARK_BLUE}\h ${DARK_RED})"
+
+FULLPATH="${DARK_BLUE}\w${CLEAR}"
+GIT_CHECK="${DARK_YELLOW}\$(___git_branch)\$(___git_dirty_flag)"
+
+#PS1="\[\e[0;37;40m[\$?] [\[\e[33;40m$(___ssh_flag)\[\e[0;36;40m\u@\h \[\e[33;40m\$(___git_branch)\$(___git_dirty_flag)\[\e[37;40m\[\e[37;40m]          \[\e[32;40m\w\[\e[0;0m $ "
+PS1="${RETVAL} $(___ssh_flag)${USER_HOST} ${FULLPATH} ${GIT_CHECK}\[\033[00m\$ "
+PS2="\[\a"$PS2
+
+# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\u@\h\[\033[00m:\[\033[01;34m\w\[\033[00m\$ '

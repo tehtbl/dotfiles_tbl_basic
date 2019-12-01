@@ -1,0 +1,67 @@
+# Give me 256 colors! gnome-terminal hardcodes TERM to xterm...
+[ $TERM = xterm ] && export TERM=xterm-256color
+
+# need HOST variable
+test -z "${HOST}" && HOST=`hostname` # && echo "set HOST=${HOST}"
+
+# if we can't find an agent, start one, and restart the script.
+if [ ! -S ~/.auth_sock_ssh ]; then
+  eval $(ssh-agent)
+  ln -sf "$SSH_AUTH_SOCK" ~/.auth_sock_ssh
+fi
+export SSH_AUTH_SOCK=~/.auth_sock_ssh
+ssh-add -l > /dev/null || ssh-add
+
+# GPG Agent
+export GPG_TTY=$(tty)
+eval $(gpg-agent &> /dev/null)
+# unset SSH_AGENT_PID
+# if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+#   export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+# fi
+
+# Xmodmap
+[[ $OSTYPE =~ ^linux ]] && [[ -f `which xmodmap` ]] && [[ -r "$HOME/.Xmodmap" ]] && xmodmap "$HOME/.Xmodmap"
+
+# bash completion
+[ -r "/usr/local/etc/bash_completion" ] && source "/usr/local/etc/bash_completion"
+[ -r "/usr/share/bash-completion/bash_completion" ] && source "/usr/share/bash-completion/bash_completion"
+
+# dircolors
+which dircolors &>/dev/null && [[ -f "$HOME/.dircolors" ]] && eval $(dircolors $HOME/.dircolors)
+
+# editor
+export EDITOR="vim"
+export GIT_EDITOR="vim"
+
+# history
+export HISTCONTROL="ignoreboth"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:reboot"
+
+# display
+[ -z "$DISPLAY" ] && DISPLAY=":0.0"
+
+# lang settings
+export LC_ALL="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+
+# man path settings
+unset MANPATH  # delete if you already modified MANPATH elsewhere in your config
+export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
+# PATH settings
+export PATH="/usr/local/bin:$HOME/bin:$PATH"
+
+# https://www.cyberciti.biz/tips/understanding-linux-unix-umask-value-usage.html
+umask 077
+
+# shell options
+shopt -s checkwinsize
+stty -ixon
+
+# additional files to source
+for file in ~/.bash_{prompt,functions,nvm,pyenv,sw042} ~/tbl_aliases; do
+    [ -r "$file" ] && source "$file"
+done
+unset file

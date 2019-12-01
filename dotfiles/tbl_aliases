@@ -1,0 +1,78 @@
+# Listing files
+alias ls='ls --color -F --group-directories-first'
+alias ll='LC_ALL="C.UTF-8" ls -lah --color -F --group-directories-first'
+$(ls --color &>/dev/null) && alias ls="command ls -hF --color=auto"
+#alias ls="command ls -hF"
+#alias ll='ls -lh'
+
+alias l='ls -1'
+alias la='ls -a'
+alias lla='ll -aF'
+
+alias rdesktop='rdesktop -g 1200x900 '
+
+alias cleanTexFiles='find . -iname "*.aux" -or -iname "*.log" -or -iname "*.out" -or -iname "*.toc" -or -iname "*.sum" -or -iname "*.tcp" | xargs rm -f -'
+
+# Useful...
+alias g='grep -i'                               # case insensitive grep
+alias ducks='du -cksh * | sort -rh | head -11'  # List size of pwd's contents
+which colordiff >/dev/null && alias diff='colordiff'
+alias less='less -R'
+
+# more useful variants
+which vim >/dev/null && alias vi=vim
+which neomutt >/dev/null && alias mutt=neomutt
+
+# Git stuff
+alias gl='git log --graph --abbrev-commit --oneline --decorate'
+
+# Wonder what I actually use...
+alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
+
+# Docker aliases
+alias docker_rmf='docker rm -f $(docker ps -a -q)'
+alias docker_rmi='docker rmi $(docker images -q)'
+
+alias docker_ubnt_xenial='docker run --rm -v $(pwd):/mnt -it tehtbl/ubuntu:xenial /bin/bash -c "cd /mnt && bash"'
+alias docker_ubnt_bionic='docker run --rm -v $(pwd):/mnt -it tehtbl/ubuntu:bionic /bin/bash -c "cd /mnt && bash"'
+alias docker_deb_stable='docker run --rm -v $(pwd):/mnt -it tehtbl/debian:stable /bin/bash -c "cd /mnt && bash"'
+alias docker_deb_unstable='docker run --rm -v $(pwd):/mnt -it tehtbl/debian:unstable /bin/bash -c "cd /mnt && bash"'
+
+# Mac OSX specific aliases
+#-------------------------------------------------------------------------------
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+  # gVim for the win
+  alias gvim=mvim
+
+  # Wireless IP address
+  alias localip="ipconfig getifaddr en1"
+
+  # Recursively delete `.DS_Store` files
+  alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
+
+  # Show/hide hidden files in Finder
+  alias show="defaults write com.apple.Finder AppleShowAllFiles -bool true && killall Finder"
+  alias hide="defaults write com.apple.Finder AppleShowAllFiles -bool false && killall Finder"
+
+  # Hide/show all desktop icons (useful when presenting)
+  alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+  alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+  # Quickly lock screen
+  alias lock='/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend'
+
+  alias top='top -o cpu'
+
+  alias ls="command ls -hF"
+  alias ll='ls -lah'
+fi
+
+# Linux specific aliases
+#-------------------------------------------------------------------------------
+if [[ "$OSTYPE" =~ ^linux ]]; then
+  # open file with the default application for its type
+  alias open='xdg-open'
+
+  # show pstree to self
+  alias pidme='pstree -ps $$'
+fi

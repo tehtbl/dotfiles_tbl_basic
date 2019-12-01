@@ -1,0 +1,27 @@
+---
+dist: bionic
+services: docker
+
+env:
+  global:
+    - NAMESPACE: "tehtbl"
+  matrix:
+    - IMAGE="debian" TAG="stable"
+    - IMAGE="debian" TAG="testing"
+    - IMAGE="debian" TAG="unstable"
+    - IMAGE="ubuntu" TAG="xenial"
+    - IMAGE="ubuntu" TAG="bionic"
+    - IMAGE="ubuntu" TAG="devel"
+
+matrix:
+  allow_failures:
+    - env: IMAGE="debian" TAG="unstable"
+    - env: IMAGE="ubuntu" TAG="devel"
+
+script:
+  # get current Python version for Tox testing
+  - export PY_VERSION="py${TRAVIS_PYTHON_VERSION//.}"
+  - echo "${PY_VERSION}"
+
+  # run tests
+  - make test

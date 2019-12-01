@@ -1,0 +1,10 @@
+.idea/
+.tox/
+.vagrant/
+
+.pyc
+.so
+.swp
+.log
+
+.DS_Store

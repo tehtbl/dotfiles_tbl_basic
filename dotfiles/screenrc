@@ -1,0 +1,161 @@
+# =======================================================
+#       VARIABLEN
+# =======================================================
+
+
+#backtick 1 0 0 ${HOME}/bin/traffic.sh
+nethack               on
+autodetach            on              # Standard: on
+crlf                  off             # Standard: off
+deflogin              off             # Standard: on
+hardcopy_append       on              # Standard: off
+startup_message       off             # Standard: on
+vbell                 on
+defscrollback         1000            # Standard: 100
+silencewait           15              # Standard: 30
+shell                 bash
+activity              "activity in %n (%t) [%w:%s]~"
+bell                  "%C -> %n%f %t activity!"
+vbell_msg             " *Fuck this bell ;-)* "
+
+activity "%c activity -> %n%f %t"
+
+# ======================================================
+# Keybindings
+# ======================================================
+bind h prev
+bind l next
+bind ^l next
+bind P paste          .
+bind ~ activity       "activity in %n (%t) [%w:%s]~"
+bind * activity       "activity in %n (%t) [%w:%s]"
+bind m screen -t 'muttng'    1 muttng
+bind G screen -t 'Google'  8 elinks http://www.google.de
+bind s screen -t 'su'      3 sudo su
+bind H screen -t 'Links' 5 elinks
+bind v screen -t 'vim'     4 vim
+bind p screen -t 'htop'     0 htop
+bind b screen -t 'battery' 0 yacpi
+
+# ===============================================================
+# TERMCAP and TERMINFO
+# ===============================================================
+
+
+#  termcapinfo xterm     ti@:te@
+#
+# Matthias Kopfermann <matthias_kopfermann@gmx.de> [020222]:
+# make the cursor show up in red:
+  termcapinfo xterm "ve=\E[?25h\E[?17;0;64c"
+
+  termcapinfo linux "ve=\E[?25h\E[?17;0;64c"
+#termcapinfo  xterm Z0=\E[?3h:Z1=\E[?3l:is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l
+
+
+# ===========================================
+# ndings
+# ======================================================
+
+# break       ^B b
+# clear       C
+# colon       :
+# copy        ^[ [
+# detach      ^D d
+# digraph     ^V
+# displays    *
+# dumptermcap .
+# flow        ^F f
+# focus       ^I
+# hardcopy    h
+# help        ?
+# history     { }
+# info        i
+# kill        K k
+# lastmsg     ^M m
+# license     ,
+# log         H
+# login       L
+# meta        x
+# monitor     M
+# next        ^@ ^N sp n
+# number      N
+# only        Q
+# other       ^X
+# pow_break   B
+# pow_detach  D
+# prev        ^H ^P p ^?
+# quit        \
+# readbuf     <
+# redisplay   ^L l
+# remove      X
+# removebuf   =
+# reset       Z
+# screen      ^C c
+# select      " '
+# silence     _
+# split       S
+# suspend     ^Z z
+# time        ^T t
+# title       A
+# vbell       ^G
+# version     v
+# width       W
+# windows     ^W w
+# wrap        ^R r
+# writebuf    >
+# xoff        ^S s
+# xon         ^Q q
+# ^]  paste .
+# -   select -
+# 0   select 0
+# 1   select 1
+# 2   select 2
+# 3   select 3
+# 4   select 4
+# 5   select 5
+# 6   select 6
+# 7   select 7
+# 8   select 8
+# 9   select 9
+# I   login on
+# O   login off
+# ]   paste .
+
+
+# ===========================================
+#       CAPTION
+# ===========================================
+
+# einstellbare Ueberschrift der Screenleiste
+
+caption always "%{wb}%n%f %t %{wk} %?%-Lw%?%{wb}[%n*%f %t]%?(%u)%?%{wk}%?%+Lw%? %{wk}"
+#caption always '%{= gb}%50=%n%f %t%{= gb}'
+#caption always "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+
+# ===========================================
+#       HARDSTATUS
+# ===========================================
+
+hardstatus alwayslastline "%{kr}host: %{kw}%H%{kg} %c - %D %d.%m.%Y %{kr}(load: %l)" 
+#hardstatus alwayslastline "%{kr}host: %{kw}%H%{kg} %c - %D %d.%m.%Y %{kr}(load: %l) %{kw}%1`"
+
+
+activity "%c activity -> %n%f %t"
+
+#sorendition    kG # black  on bold green
+
+# setzen eines screen passworts
+# password lala
+# screen farben:
+# 0 Black             .    leave color unchanged
+# 1 Red               b    blue
+# 2 Green             c    cyan
+# 3 Brown / yellow    d    default color
+# 4 Blue              g    green           b    bold
+# 5 Purple            k    blacK           B    blinking
+# 6 Cyan              m    magenta         d    dim
+# 7 White             r    red             r    reverse
+# 8 unused/illegal    w    white           s    standout
+# 9 transparent       y    yellow          u    underline
+
+# EOF  vim: ts=8 et nowrap

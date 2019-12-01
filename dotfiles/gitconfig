@@ -1,0 +1,92 @@
+[user]
+
+    email = 3999809+tehtbl@users.noreply.github.com
+    name = thetbl
+
+[push]
+
+    default = simple
+
+[alias]
+
+    # View abbreviated SHA, description, and history graph of the latest 20 commits
+    l = log -n 15 --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+
+    # View the current working tree status using the short format
+    s = status -s -b
+    ss = !bash -c 'git remote update && git status -s -b'
+
+    # Show the diff between the latest commit and the current state
+    d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+
+    # `git di $number` shows the diff between the state `$number` revisions ago and the current state
+    h = !"d() { git diff --patch-with-stat HEAD~$1; }; git diff-index --quiet HEAD -- || clear; d"
+
+    # Commit all changes
+    ca = !git add -A && git commit -av
+
+    # commit and push all changes
+    pca = !bash -c 'git status -s && echo "OK?" && read && git add -A && git commit -av && git push'
+    #cap = !bash -c 'git status -s && echo && echo "OK? [ENTER] or [Ctrl-C]" && read && git commit -m "lazy update" -av && git push'
+    cap = !bash -c 'git status -s && echo && echo "OK? [ENTER] or [Ctrl-C]" && read && git add -A && git commit -avm \"lazy update\" && git push'
+
+    # clone
+    c = clone
+
+[apply]
+
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
+
+[core]
+
+    # Use custom `.gitignore` and `.gitattributes`
+    excludesfile = ~/.gitignore
+    attributesfile = ~/.gitattributes
+
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    # [default] trailing-space: looks for spaces at the end of a line
+    # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+    editor = vim
+
+[color]
+
+    # Use colors in Git commands that are capable of colored output when
+    # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+    ui = auto
+
+[color "branch"]
+
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+
+    meta = yellow bold
+    frag = magenta bold # line info
+    old = red # deletions
+    new = green # additions
+
+[color "status"]
+
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[diff]
+
+    # Detect copies as well as renames
+    renames = copies
+
+[help]
+
+    # Automatically correct and execute mistyped commands
+    autocorrect = 1
+
+[merge]
+
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
