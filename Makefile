@@ -25,12 +25,12 @@ link: | $(DOTFILES) ## interactively add symbolic dotfile links // actually copy
 
 # Actually update/copy the dotfiles
 $(DOTFILES):
-	@echo "Linking dotfiles"
+	@echo "[*] Linking $(notdir $@)"
 	@mv -v "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
 	@cp -av "$(DOTFILES_DIR)/$(notdir $@)" "$(dir $@).$(notdir $@)"
 
 preflightcheck: ## check if all dotfiles can be installed and used as expected
-	@echo "updating ZSH git repos"
+	@echo "[*] updating ZSH git repos"
 
 	@git -C $(HOME)/.oh-my-zsh pull || \
 		git clone https://github.com/robbyrussell/oh-my-zsh.git $(HOME)/.oh-my-zsh &> /dev/null
@@ -50,6 +50,7 @@ preflightcheck: ## check if all dotfiles can be installed and used as expected
 	@bash -c "which fc-cache &> /dev/null || (echo 'do: sudo apt install fontconfig' && exit 1)"
 
 postinsttmux: ## install tmux tpm etc after config is linked
+	@echo "[*] doing post tmux install"
 	@git -C $(HOME)/.tmux/plugins/tpm pull || \
 		git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm
 	mkdir -p $(HOME)/.fonts $(HOME)/.config/fontconfig/conf.d

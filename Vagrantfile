@@ -88,8 +88,8 @@ def run_tests(boxname, user)
     # mv /vagrant/ansible-role-#{$rolename} /vagrant/#{$rolename}
     cd /vagrant/#{$rolename}
 
-    pyenv global 3.7.5rc1
-    pip3 install tox
+    # pyenv global 3.7.5rc1
+    # pip3 install tox
 
     rm -rf /vagrant/#{$rolename}/.tox
     IMAGE="ubuntu" TAG="bionic" tox
@@ -132,11 +132,11 @@ Vagrant.configure(2) do |config|
     b.vm.provision "fs init", :run => "once", :type => :shell, :inline => fs_init("vagrant")
     b.vm.provision "packages debianoid", :run => "once", :type => :shell, :inline => packages_debianoid("vagrant")
     b.vm.provision "install pyenv", :run => "once", :type => :shell, :privileged => false, :inline => install_pyenv("bionic64")
-    b.vm.provision "install pythons", :run => "once", :type => :shell, :privileged => false, :inline => install_pythons("bionic64")
-    b.vm.provision :docker, :run => "once"
-    b.vm.provision :reload, :run => "once"
+    # b.vm.provision "install pythons", :run => "once", :type => :shell, :privileged => false, :inline => install_pythons("bionic64")
+    # b.vm.provision :docker, :run => "once"
+    # b.vm.provision :reload, :run => "once"
 
-    b.vm.provision "run tests", :run => "always", :type => :shell, :privileged => false, :inline => run_tests("bionic64", "vagrant")
+    # b.vm.provision "run tests", :run => "always", :type => :shell, :privileged => false, :inline => run_tests("bionic64", "vagrant")
   end
 
 end
