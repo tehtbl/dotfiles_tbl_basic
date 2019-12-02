@@ -1,3 +1,5 @@
+<a href="https://travis-ci.org/tehtbl/dotfiles_tbl_basic"><img src="https://travis-ci.org/tehtbl/dotfiles_tbl_basic.svg?branch=master" alt="Build status"/></a>
+
 Description
 ===========
 
