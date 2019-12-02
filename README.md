@@ -1,7 +1,7 @@
 Description
 ===========
 
-This repo houses my basic dotfiles which are essential to me, e.g. Bash, Zsh, ...
+This repo houses my essential dotfiles, e.g. Bash, Zsh, vimrc, ...
 
 Requirements
 ============
