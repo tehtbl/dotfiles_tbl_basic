@@ -26,8 +26,9 @@ link: | $(DOTFILES) ## interactively add symbolic dotfile links // actually copy
 # Actually update/copy the dotfiles
 $(DOTFILES):
 	@echo "[*] Linking $(notdir $@)"
-	mv "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
-	cp -a "$(DOTFILES_DIR)/$(notdir $@)" "$(dir $@).$(notdir $@)" 
+	@rm -rf "$(dir $@).$(notdir $@).bck-$(MY_DATE)"
+	@mv "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
+	@cp -a "$(DOTFILES_DIR)/$(notdir $@)" "$(dir $@).$(notdir $@)"
 
 preflight: ## check if all dotfiles can be installed and used as expected
 	@echo "[*] preparing to fly"

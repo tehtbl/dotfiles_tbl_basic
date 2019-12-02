@@ -19,7 +19,17 @@ git -C "${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" pull || \
 git -C "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" pull || \
   git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 
-which tmux &> /dev/null || (echo "do: sudo apt install tmux" && exit 1)
-which fc-cache &> /dev/null || (echo "do: sudo apt install fontconfig" && exit 1)
+# which tmux &> /dev/null || (echo "do: sudo apt install tmux" && exit 1)
+# which fc-cache &> /dev/null || (echo "do: sudo apt install fontconfig" && exit 1)
+
+if [[ $OSTYPE =~ ^linux ]];
+then
+  echo "[*] checking for installed packages"
+  FONT_PACKAGES="fonts-powerline powerline python3-powerline fontconfig tmux"
+  for f in ${FONT_PACKAGES};
+  do
+    dpkg -l ${f} &> /dev/null || (echo ">>> do: apt install ${f}" && exit -1)
+  done
+fi
 
 exit 0

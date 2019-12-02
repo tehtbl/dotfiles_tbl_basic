@@ -14,10 +14,10 @@ def fs_init(user)
   return <<-EOF
     find /vagrant/ -name '__pycache__' -exec rm -rf {} \\; 2> /dev/null
 
-    chown -R #{user} /vagrant/*
+    chown -R #{user}. /vagrant/*
+
     touch ~#{user}/.bash_profile
     chown #{user} ~#{user}/.bash_profile
-
     echo 'export LANG=en_US.UTF-8' >> ~#{user}/.bash_profile
     echo 'export LC_CTYPE=en_US.UTF-8' >> ~#{user}/.bash_profile
     echo 'export LC_ALL=en_US.UTF-8' >> ~#{user}/.bash_profile
@@ -85,6 +85,17 @@ end
 #
 # run tests
 #
+def run_chown(user)
+  return <<-EOF
+
+    sudo chown -R #{user}. /vagrant
+
+  EOF
+end
+
+#
+# run tests
+#
 def run_tests(boxname, user)
   return <<-EOF
     . ~/.bash_profile
@@ -142,7 +153,7 @@ Vagrant.configure(2) do |config|
     # b.vm.provision :docker, :run => "once"
     b.vm.provision :reload, :run => "once"
 
-    # b.vm.provision "run tests", :run => "always", :type => :shell, :privileged => false, :inline => run_tests("bionic64", "vagrant")
+    b.vm.provision "run chown on vagrant dir", :run => "always", :type => :shell, :privileged => false, :inline => run_chown("vagrant")
   end
 
 end
