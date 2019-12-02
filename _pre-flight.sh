@@ -3,7 +3,7 @@
 set -e
 
 git -C "${HOME}/.oh-my-zsh" pull || \
-  git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
+  git clone https://github.com/robbyrussell/oh-my-zsh.git "${HOME}/.oh-my-zsh"
 
 git -C "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k" pull || \
   git clone https://github.com/romkatv/powerlevel10k.git "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
@@ -28,7 +28,7 @@ then
   FONT_PACKAGES="fonts-powerline powerline python3-powerline fontconfig tmux"
   for f in ${FONT_PACKAGES};
   do
-    dpkg -l ${f} &> /dev/null || (echo ">>> do: sudo apt install ${FONT_PACKAGES}" && exit -1)
+    dpkg -l "${f}" &> /dev/null || (echo ">>> do: sudo apt install ${FONT_PACKAGES}" && exit 1)
   done
 fi
 

@@ -1,27 +1,40 @@
 ---
 dist: bionic
 services: docker
+sudo: required
 
-env:
-  global:
-    - NAMESPACE: "tehtbl"
-  matrix:
-    - IMAGE="debian" TAG="stable"
-    - IMAGE="debian" TAG="testing"
-    - IMAGE="debian" TAG="unstable"
-    - IMAGE="ubuntu" TAG="xenial"
-    - IMAGE="ubuntu" TAG="bionic"
-    - IMAGE="ubuntu" TAG="devel"
+# env:
+#   global:
+#     - NAMESPACE: "tehtbl"
+#   matrix:
+#     - IMAGE="debian" TAG="stable"
+#     - IMAGE="debian" TAG="testing"
+#     - IMAGE="debian" TAG="unstable"
+#     - IMAGE="ubuntu" TAG="xenial"
+#     - IMAGE="ubuntu" TAG="bionic"
+#     - IMAGE="ubuntu" TAG="devel"
+#
+# matrix:
+#   allow_failures:
+#     - env: IMAGE="debian" TAG="unstable"
+#     - env: IMAGE="ubuntu" TAG="devel"
 
-matrix:
-  allow_failures:
-    - env: IMAGE="debian" TAG="unstable"
-    - env: IMAGE="ubuntu" TAG="devel"
+before_script:
+  - sudo apt-get update
+  - sudo apt-get -y install fonts-powerline powerline python3-powerline fontconfig tmux
 
 script:
-  # get current Python version for Tox testing
-  - export PY_VERSION="py${TRAVIS_PYTHON_VERSION//.}"
-  - echo "${PY_VERSION}"
-
   # run tests
   - make test
+
+  # run preflight
+  - make preflight
+
+  # run link
+  - make link
+
+  # run postactions
+  - make postactions
+
+  # run all again
+  - make all
