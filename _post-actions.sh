@@ -27,7 +27,7 @@ then
 else
   tmux new -d -s __noop >/dev/null 2>&1 || true
   tmux set-environment -g TMUX_PLUGIN_MANAGER_PATH "${HOME}/.tmux/plugins"
-  ./"${HOME}"/.tmux/plugins/tpm/bin/install_plugins
+  "${HOME}"/.tmux/plugins/tpm/bin/install_plugins
   tmux kill-session -t __noop >/dev/null 2>&1
 fi
 
