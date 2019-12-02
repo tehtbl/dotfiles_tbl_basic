@@ -1,0 +1,20 @@
+# if we can't find an agent, start one, and restart the script.
+if [ ! -S ~/.auth_sock_ssh ]; then
+  eval $(ssh-agent)
+  ln -sf "$SSH_AUTH_SOCK" ~/.auth_sock_ssh
+fi
+export SSH_AUTH_SOCK=~/.auth_sock_ssh
+ssh-add -l > /dev/null || ssh-add
+
+# GPG Agent
+export GPG_TTY=$(tty)
+eval $(gpg-agent &> /dev/null)
+
+# editor
+export EDITOR="vim"
+export GIT_EDITOR="vim"
+
+# lang settings
+export LC_ALL="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+export LANG="en_US.UTF-8"

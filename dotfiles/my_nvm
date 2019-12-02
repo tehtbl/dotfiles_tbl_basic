@@ -7,6 +7,10 @@ then
   export PATH="$NPM_PACKAGES/bin:$PATH"
   export NVM_DIR="$HOME/.nvm"
 
+  # man path settings
+  unset MANPATH  # delete if you already modified MANPATH elsewhere in your config
+  export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+
   # This loads nvm
   [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 

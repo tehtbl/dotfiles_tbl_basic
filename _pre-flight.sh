@@ -28,7 +28,7 @@ then
   FONT_PACKAGES="fonts-powerline powerline python3-powerline fontconfig tmux"
   for f in ${FONT_PACKAGES};
   do
-    dpkg -l ${f} &> /dev/null || (echo ">>> do: apt install ${f}" && exit -1)
+    dpkg -l ${f} &> /dev/null || (echo ">>> do: sudo apt install ${FONT_PACKAGES}" && exit -1)
   done
 fi
 

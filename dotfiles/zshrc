@@ -86,36 +86,12 @@ bindkey '^r' history-incremental-search-backward
 bindkey '^s' history-incremental-search-forward
 
 export KEYTIMEOUT=1
-export EDITOR='vim'
-
-# if we can't find an agent, start one, and restart the script.
-if [ ! -S ~/.auth_sock_ssh ]; then
-  eval $(ssh-agent)
-  ln -sf "$SSH_AUTH_SOCK" ~/.auth_sock_ssh
-fi
-export SSH_AUTH_SOCK=~/.auth_sock_ssh
-ssh-add -l > /dev/null || ssh-add
-
-# GPG Agent
-export GPG_TTY=$(tty)
-eval $(gpg-agent &> /dev/null)
-
-# lang settings
-export LC_ALL="en_US.UTF-8"
-export LANGUAGE="en_US.UTF-8"
-export LANG="en_US.UTF-8"
 
 # additional files to source
-for file in ~/.bash_{nvm,pyenv,sw042} ~/.tbl_aliases; do
+for file in ~/.my_{aliases,paths,nvm,pyenv,sw042,exports}; do
     [ -r "$file" ] && source "$file"
 done
 unset file
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
-export PATH="/usr/local/bin:$PATH"
-
-#TODO: check for: autoload -U +X bashcompinit && bashcompinit
-
 # TODO: check https://github.com/lanej/dotfiles/blob/master/sh/alias
-source "$HOME/.tbl_aliases"
+# TODO: check for: autoload -U +X bashcompinit && bashcompinit

@@ -10,12 +10,11 @@ alias la='ls -a'
 alias lla='ll -aF'
 
 alias rdesktop='rdesktop -g 1200x900 '
-
 alias cleanTexFiles='find . -iname "*.aux" -or -iname "*.log" -or -iname "*.out" -or -iname "*.toc" -or -iname "*.sum" -or -iname "*.tcp" | xargs rm -f -'
 
 # Useful...
-alias g='grep -i'                               # case insensitive grep
-alias ducks='du -cksh * | sort -rh | head -11'  # List size of pwd's contents
+alias g='grep -i'
+alias ducks='du -cksh * | sort -rh | head -11'
 which colordiff >/dev/null && alias diff='colordiff'
 alias less='less -R'
 
