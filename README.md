@@ -1,5 +1,5 @@
-tbl_dotfiles_basic
-==================
+Description
+===========
 
 This repo houses my basic dotfiles which are essential to me, e.g. Bash, Zsh, ...
 
