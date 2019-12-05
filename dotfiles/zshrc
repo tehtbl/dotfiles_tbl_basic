@@ -14,6 +14,7 @@ plugins=(
 #	vi-mode
 #	kubectl
 	zsh-syntax-highlighting
+	vagrant
 )
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
