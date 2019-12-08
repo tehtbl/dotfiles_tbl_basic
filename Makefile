@@ -26,7 +26,7 @@ link: | $(DOTFILES) ## interactively add symbolic dotfile links // actually copy
 # Actually update/copy the dotfiles
 $(DOTFILES):
 	@echo "[*] Linking $(notdir $@)"
-	@rm -rf "$(dir $@).$(notdir $@).bck-$(MY_DATE)"
+	@rm -rf "$(dir $@).$(notdir $@).bck-*"
 	@mv "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
 	@cp -a "$(DOTFILES_DIR)/$(notdir $@)" "$(dir $@).$(notdir $@)"
 
