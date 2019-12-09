@@ -14,11 +14,31 @@ if [[ -f "${HOME}/.fonts/PowerlineSymbols.otf" ]];
 then
   echo "Fonts already installed"
 else
-  mkdir -p "${HOME}/.fonts ${HOME}/.config/fontconfig/conf.d"
-  wget -P "${HOME}/.fonts" https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf &> /dev/null
-  wget -P "${HOME}/.config/fontconfig/conf.d/" https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf &> /dev/null
 
-  fc-cache -vf "${HOME}/.fonts/" &> /dev/null
+  # Mac OSX specific font installations
+  #-------------------------------------------------------------------------------
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+
+
+  fi
+
+  # Linux specific font installations
+  #-------------------------------------------------------------------------------
+  if [[ "$OSTYPE" =~ ^linux ]]; then
+    mkdir -p "${HOME}"/.fonts
+    mkdir -p "${HOME}"/.config/fontconfig/conf.d
+    mkdir -p "${HOME}"/.local/share/fonts
+
+    https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Ubuntu.zip
+    wget -O /tmp/Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
+    unzip /tmp/Hack.zip -d "${HOME}"/.local/share/fonts
+
+    wget -P "${HOME}/.fonts" https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf &> /dev/null
+    wget -P "${HOME}/.config/fontconfig/conf.d/" https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf &> /dev/null
+
+    fc-cache -vf "${HOME}/.fonts/" &> /dev/null
+  fi
+
 fi
 
 if [[ -d "${HOME}/.tmux/plugins/tmux-plugin-sysstat" ]];
