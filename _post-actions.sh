@@ -18,8 +18,7 @@ else
   # Mac OSX specific font installations
   #-------------------------------------------------------------------------------
   if [[ "$OSTYPE" =~ ^darwin ]]; then
-
-
+    echo "TODO: install fonts manually!"
   fi
 
   # Linux specific font installations
