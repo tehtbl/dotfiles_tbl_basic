@@ -28,10 +28,10 @@ else
     mkdir -p "${HOME}"/.config/fontconfig/conf.d
     mkdir -p "${HOME}"/.local/share/fonts
 
-    https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Ubuntu.zip
     wget -O /tmp/Hack.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
     unzip /tmp/Hack.zip -d "${HOME}"/.local/share/fonts
 
+    # TODO: check if needed anymore!
     wget -P "${HOME}/.fonts" https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf &> /dev/null
     wget -P "${HOME}/.config/fontconfig/conf.d/" https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf &> /dev/null
 
