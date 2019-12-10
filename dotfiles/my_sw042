@@ -3,4 +3,6 @@ if [[ `hostname` =~ ^sw-c- ]]; then
   alias pycharm='~/bin/pycharm-2019.2/bin/pycharm.sh & disown && sleep 1 && exit;'
   alias buildReportTex='pdflatex projdoc.tex && pdflatex projdoc.tex && pdflatex projdoc.tex'
 
+  export PATH="$HOME/bin/SWRTS-core:$PATH"
+
 fi

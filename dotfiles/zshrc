@@ -26,8 +26,8 @@ COMPLETION_WAITING_DOTS="true"
 HISTSIZE=99999999
 SAVEHIST=99999999
 
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-ZSH_THEME="spaceship"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+#ZSH_THEME="spaceship"
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_COLOR_SCHEME='dark'
