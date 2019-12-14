@@ -77,14 +77,14 @@ unsetopt share_history
 unsetopt correct
 unsetopt correct_all
 
-bindkey -v # vi-mode
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^?' backward-delete-char
-bindkey '^h' backward-delete-char
-bindkey '^w' backward-kill-word
-bindkey '^r' history-incremental-search-backward
-bindkey '^s' history-incremental-search-forward
+# bindkey -v # vi-mode
+# bindkey '^P' up-history
+# bindkey '^N' down-history
+# bindkey '^?' backward-delete-char
+# bindkey '^h' backward-delete-char
+# bindkey '^w' backward-kill-word
+# bindkey '^r' history-incremental-search-backward
+# bindkey '^s' history-incremental-search-forward
 
 export KEYTIMEOUT=1
 
