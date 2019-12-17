@@ -1,11 +1,12 @@
 if [[ -d "$HOME/.pyenv" ]];
 then
 
+  export PATH="$HOME/.pyenv/bin:$PATH"
+
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 
   export PIP_REQUIRE_VIRTUALENV=""
-  export PATH="$HOME/.pyenv/bin:$PATH"
   export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 fi
