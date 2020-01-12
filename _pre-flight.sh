@@ -25,7 +25,7 @@ git -C "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions" pull || \
 if [[ $OSTYPE =~ ^linux ]];
 then
   echo "[*] checking for installed packages"
-  FONT_PACKAGES="fonts-powerline powerline python3-powerline fontconfig tmux"
+  FONT_PACKAGES="fonts-powerline powerline python3-powerline fontconfig tmux unzip wget"
   for f in ${FONT_PACKAGES};
   do
     dpkg -l "${f}" &> /dev/null || (echo ">>> do: sudo apt install ${FONT_PACKAGES}" && exit 1)
