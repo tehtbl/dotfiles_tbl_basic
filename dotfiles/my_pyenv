@@ -6,7 +6,7 @@ then
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 
-  export PIP_REQUIRE_VIRTUALENV=False
+  export PIP_REQUIRE_VIRTUALENV=0
   export PYTHON_CONFIGURE_OPTS="--enable-shared"
 
 fi
