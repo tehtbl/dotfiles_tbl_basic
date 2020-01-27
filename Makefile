@@ -12,6 +12,9 @@ DOTFILES_DIR := $(MY_DIR)/dotfiles
 MY_FILES := $(shell ls -A $(DOTFILES_DIR))
 DOTFILES := $(addprefix $(HOME)/,$(MY_FILES))
 
+BASHFILES := $(shell ls -A $(DOTFILES_DIR)/bash* $(DOTFILES_DIR)/my_* $(DOTFILES_DIR)/vimrc)
+DOTFILESBASH := $(addprefix $(HOME)/,$(BASHFILES))
+
 # Prints a help for the Makefile
 .PHONY: help
 help: ## This help
@@ -21,10 +24,19 @@ help: ## This help
 .PHONY: all link preflight postactions
 all: preflight link postactions ## make all targets
 
-link: | $(DOTFILES) ## interactively add symbolic dotfile links // actually copy not linking
+link: | $(DOTFILES) ## add dotfiles // actually copy not linking
 
 # Actually update/copy the dotfiles
 $(DOTFILES):
+	@echo "[*] Linking $(notdir $@)"
+	@rm -rf "$(dir $@).$(notdir $@).bck-*"
+	@mv "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
+	@cp -a "$(DOTFILES_DIR)/$(notdir $@)" "$(dir $@).$(notdir $@)"
+
+
+bash: | $(DOTFILESBASH) ## add bash dotfiles // actually copy not linking
+
+$(DOTFILESBASH):
 	@echo "[*] Linking $(notdir $@)"
 	@rm -rf "$(dir $@).$(notdir $@).bck-*"
 	@mv "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
