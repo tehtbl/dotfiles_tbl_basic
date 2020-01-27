@@ -15,7 +15,6 @@ DOTFILES := $(addprefix $(HOME)/,$(MY_FILES))
 MY_BASHFILES := $(shell ls -A $(DOTFILES_DIR)/bash* $(DOTFILES_DIR)/my_* $(DOTFILES_DIR)/vimrc)
 BASHDOTFILES := $(addprefix $(HOME)/,$(MY_BASHFILES))
 
-
 # Prints a help for the Makefile
 .PHONY: help
 help: ## This help
@@ -34,13 +33,11 @@ $(DOTFILES):
 	@mv "$(dir $@).$(notdir $@)" "$(dir $@).$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue
 	@cp -a "$(DOTFILES_DIR)/$(notdir $@)" "$(dir $@).$(notdir $@)"
 
-
 bash: | $(BASHDOTFILES) ## add bash dotfiles // actually copy not linking
 
 $(BASHDOTFILES):
 	@echo "[*] Linking $(notdir $@)"
 	@rm -rf "$(HOME)/.$(notdir $@).bck-*"
-	@mv "$(HOME)/.$(notdir $@)" "$(HOME)/.$(notdir $@).bck-$(MY_DATE)" &>/dev/null || continue"
 	@cp -a "$(DOTFILES_DIR)/$(notdir $@)" "$(HOME)/.$(notdir $@)"
 
 preflight: ## check if all dotfiles can be installed and used as expected
