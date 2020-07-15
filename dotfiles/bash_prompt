@@ -1,15 +1,48 @@
 
-# https://misc.flogisoft.com/bash/tip_colors_and_formatting
-DARK_BLACK="\e[0;49;30m"
-DARK_RED="\e[0;49;31m"
-DARK_GREEN="\e[0;49;32m"
-DARK_YELLOW="\e[0;49;33m"
-DARK_BLUE="\e[0;49;34m"
-DARK_MAGENTA="\e[0;49;35m"
-DARK_TURKEY="\e[0;49;36m"
-DARK_WHITE="\e[0;49;37m"
-DARK_GREY="\e[0;49;90m"
-CLEAR="\e[0;0m"
+# THX to https://github.com/jimeh/git-aware-prompt/blob/master/colors.sh
+
+# Regular
+txtblk="$(tput setaf 0 2>/dev/null || echo '\e[0;30m')"  # Black
+txtred="$(tput setaf 1 2>/dev/null || echo '\e[0;31m')"  # Red
+txtgrn="$(tput setaf 2 2>/dev/null || echo '\e[0;32m')"  # Green
+txtylw="$(tput setaf 3 2>/dev/null || echo '\e[0;33m')"  # Yellow
+txtblu="$(tput setaf 4 2>/dev/null || echo '\e[0;34m')"  # Blue
+txtpur="$(tput setaf 5 2>/dev/null || echo '\e[0;35m')"  # Purple
+txtcyn="$(tput setaf 6 2>/dev/null || echo '\e[0;36m')"  # Cyan
+txtwht="$(tput setaf 7 2>/dev/null || echo '\e[0;37m')"  # White
+
+# Bold
+bldblk="$(tput setaf 0 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;30m')"  # Black
+bldred="$(tput setaf 1 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;31m')"  # Red
+bldgrn="$(tput setaf 2 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;32m')"  # Green
+bldylw="$(tput setaf 3 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;33m')"  # Yellow
+bldblu="$(tput setaf 4 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;34m')"  # Blue
+bldpur="$(tput setaf 5 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;35m')"  # Purple
+bldcyn="$(tput setaf 6 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;36m')"  # Cyan
+bldwht="$(tput setaf 7 2>/dev/null)$(tput bold 2>/dev/null || echo '\e[1;37m')"  # White
+
+# Underline
+undblk="$(tput setaf 0 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;30m')"  # Black
+undred="$(tput setaf 1 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;31m')"  # Red
+undgrn="$(tput setaf 2 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;32m')"  # Green
+undylw="$(tput setaf 3 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;33m')"  # Yellow
+undblu="$(tput setaf 4 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;34m')"  # Blue
+undpur="$(tput setaf 5 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;35m')"  # Purple
+undcyn="$(tput setaf 6 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;36m')"  # Cyan
+undwht="$(tput setaf 7 2>/dev/null)$(tput smul 2>/dev/null || echo '\e[4;37m')"  # White
+
+# Background
+bakblk="$(tput setab 0 2>/dev/null || echo '\e[40m')"  # Black
+bakred="$(tput setab 1 2>/dev/null || echo '\e[41m')"  # Red
+bakgrn="$(tput setab 2 2>/dev/null || echo '\e[42m')"  # Green
+bakylw="$(tput setab 3 2>/dev/null || echo '\e[43m')"  # Yellow
+bakblu="$(tput setab 4 2>/dev/null || echo '\e[44m')"  # Blue
+bakpur="$(tput setab 5 2>/dev/null || echo '\e[45m')"  # Purple
+bakcyn="$(tput setab 6 2>/dev/null || echo '\e[46m')"  # Cyan
+bakwht="$(tput setab 7 2>/dev/null || echo '\e[47m')"  # White
+
+# Reset
+txtrst="$(tput sgr 0 2>/dev/null || echo '\e[0m')"  # Text Reset
 
 # My PS1 prompt.
 #    Normally:
@@ -23,11 +56,9 @@ CLEAR="\e[0;0m"
 #
 #    When on a git repo with uncommitted changes:
 #       [user@host directory branch ⚑]
-#
-# Note: it might be worth ripping out more info such as the status.
-#   See https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/git.zsh#L40
+
 ___ssh_flag() {
-    if [ -n "$SSH_TTY" -a -n "$SSH_CONNECTION" ]; then echo -en "${DARK_YELLOW}ssh:${CLEAR}"; fi
+    if [ -n "$SSH_TTY" -a -n "$SSH_CONNECTION" ]; then echo -en "\[$txtylw\]ssh:\[$txtrst\]"; fi
 }
 
 ___git_branch() {
@@ -42,35 +73,19 @@ ___git_dirty_flag() {
       echo "⚑ "
     fi
   else
-    echo "«⋯» "
+    echo " "
   fi
 }
 
-RETVAL="${DARK_WHITE}[\$?]${CLEAR}"
+MYTIME="\[$txtblu\][\A]\[$txtrst\]"
+RETVAL="\[$txtwht\][\$?]\[$txtrst\]"
 
 #USER_HOST="\[\033[0;32m\u@( \[\033[0;34m\h \[\033[0;32m)"
-USER_HOST="${DARK_GREEN}\u@( ${DARK_BLUE}\h ${DARK_GREEN})"
-[[ ${UID} -eq 0 ]] && USER_HOST="${DARK_RED}\u@( ${DARK_BLUE}\h ${DARK_RED})"
+USER_HOST="\[$txtgrn\]\u@( \[$txtblu\]\h \[$txtgrn\])\[$txtrst\]"
+[[ ${UID} -eq 0 ]] && USER_HOST="\[$txtred\]\u@( \[$txtblu\]\h \[$txtred\])"
 
-FULLPATH="${DARK_BLUE}\w${CLEAR}"
-GIT_CHECK="${DARK_YELLOW}\$(___git_branch)\$(___git_dirty_flag)"
+FULLPATH="\[$txtblu\]\w\[$txtrst\]"
+GIT_CHECK="\[$txtylw\]\$(___git_branch)\$(___git_dirty_flag)\[$txtrst\]"
 
-#PS1="\[\e[0;37;40m[\$?] [\[\e[33;40m$(___ssh_flag)\[\e[0;36;40m\u@\h \[\e[33;40m\$(___git_branch)\$(___git_dirty_flag)\[\e[37;40m\[\e[37;40m]          \[\e[32;40m\w\[\e[0;0m $ "
-PS1="${RETVAL} $(___ssh_flag)${USER_HOST} ${FULLPATH} ${GIT_CHECK}\[\033[00m\$ "
+PS1="${MYTIME} ${RETVAL} $(___ssh_flag)${USER_HOST} ${FULLPATH} ${GIT_CHECK}\[$txtrst\]\$ "
 PS2="\[\a"$PS2
-
-# PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\u@\h\[\033[00m:\[\033[01;34m\w\[\033[00m\$ '
-
-esc=`echo -en "\033"`
-red="${esc}[0;31m"
-black="${esc}[0;38m"
-blue="${esc}[0;34m"
-green="${esc}[0;32m"
-norm=`echo -en "${esc}[m\017"`
-stat=`echo -en "\015${esc}[${COLUMNS}C${esc}[10D"`
-
-if test "${UID}" = "0" ; then
-  PS1="\[\033[0;34m\][\A] \[\033[0m\][\$?] \[\033[0;31m\]\u@( \h ) \[\033[0;34m\]\w \[\033[0m\]\$ "
-else
-  PS1="\[\033[0;34m\][\A] \[\033[0m\][\$?] \[\033[0;32m\]\u@( \[\033[0;34m\]\h \[\033[0;32m\]) \[\033[0;34m\]\w \[\033[0m\]\$ "
-fi
