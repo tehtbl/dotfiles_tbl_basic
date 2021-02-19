@@ -20,6 +20,7 @@ else
   if [[ "$OSTYPE" =~ ^darwin ]]; then
     brew tap homebrew/cask-fonts
     brew cask install font-hack-nerd-font
+    zsh font_install_mac_iterm2.zsh
   fi
 
   # Linux specific font installations
