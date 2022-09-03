@@ -42,11 +42,11 @@ $(BASHDOTFILES):
 
 preflight: ## check if all dotfiles can be installed and used as expected
 	@echo "[*] preparing to fly"
-	@bash "$(MY_DIR)/_pre-flight.sh"
+	@bash "$(MY_DIR)/scripts/_pre-flight.sh"
 
 postactions: ## install tmux tpm etc after config is linked
 	@echo "[*] doing post actions"
-	@bash "$(MY_DIR)/_post-actions.sh"
+	@bash "$(MY_DIR)/scripts/_post-actions.sh"
 
 # Testing
 .PHONY: test shellcheck

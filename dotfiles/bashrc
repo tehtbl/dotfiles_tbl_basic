@@ -29,7 +29,8 @@ shopt -s checkwinsize
 stty -ixon
 
 # additional files to source
-for file in ~/.bash_{prompt,functions} ~/.my_{aliases,paths,nvm,pyenv,sw042,exports} ; do
+#for file in ~/.bash_{prompt,functions} ~/.my_{aliases,paths,nvm,pyenv,sw042,exports} ; do
+for file in ~/.bash_prompt ~/.my_{aliases,paths,nvm,pyenv,exports} ; do
     [ -r "$file" ] && source "$file"
 done
 unset file
