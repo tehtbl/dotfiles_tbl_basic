@@ -10,7 +10,7 @@ fi
 export PATH=$HOME/go/bin:$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/tblaesing/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -100,7 +100,7 @@ plugins=(
 )
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent identities id_ed25519 id_rsa_xg
+zstyle :omz:plugins:ssh-agent identities id_ed25519
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='standout'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
